@@ -3,7 +3,7 @@ import './Room.css';
 import { useEffect, useRef, useState } from "react";
 import { Socket, io } from "socket.io-client";
 
-const URL = "http://localhost:3000";
+const URL = "https://api.vibenext.bharatsharma.co";
 
 export const Room = ({
     name,
