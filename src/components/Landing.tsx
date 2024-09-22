@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react"
+import './Landing.css'; // Import the CSS file
+
+import { useEffect, useRef, useState } from "react";
 import { Room } from "./Room";
 
 export const Landing = () => {
@@ -14,38 +16,44 @@ export const Landing = () => {
             video: true,
             audio: true
         })
-        // MediaStream
-        const audioTrack = stream.getAudioTracks()[0]
-        const videoTrack = stream.getVideoTracks()[0]
+        const audioTrack = stream.getAudioTracks()[0];
+        const videoTrack = stream.getVideoTracks()[0];
         setLocalAudioTrack(audioTrack);
         setlocalVideoTrack(videoTrack);
-        if (!videoRef.current) {
-            return;
+        if (videoRef.current) {
+            videoRef.current.srcObject = new MediaStream([videoTrack]);
+            videoRef.current.play();
         }
-        videoRef.current.srcObject = new MediaStream([videoTrack])
-        videoRef.current.play();
-        // MediaStream
     }
 
     useEffect(() => {
-        if (videoRef && videoRef.current) {
-            getCam()
-        }
-    }, [videoRef]);
+        getCam();
+    }, []);
 
     if (!joined) {
-
-        return <div>
-            <video autoPlay ref={videoRef}></video>
-            <input type="text" onChange={(e) => {
-                setName(e.target.value);
-            }}>
-            </input>
-            <button onClick={() => {
-                setJoined(true);
-            }}>Join</button>
-        </div>
+        return (
+            <div className="landing-container">
+                <div className="preview-container">
+                    <h1 className="landing-header">Join the Room</h1>
+                    <video className="preview-video" autoPlay ref={videoRef}></video>
+                    <input
+                        className="name-input"
+                        type="text"
+                        placeholder="Enter your Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <button
+                        className="join-button"
+                        onClick={() => setJoined(true)}
+                        disabled={!name.trim()} // Disable if name is empty
+                    >
+                        Join
+                    </button>
+                </div>
+            </div>
+        );
     }
 
-    return <Room name={name} localAudioTrack={localAudioTrack} localVideoTrack={localVideoTrack} />
-}
+    return <Room name={name} localAudioTrack={localAudioTrack} localVideoTrack={localVideoTrack} setJoined={setJoined} />;
+};

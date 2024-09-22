@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Landing } from './components/Landing';
-
 function App() {
   return (
     <BrowserRouter>
@@ -8,7 +7,7 @@ function App() {
         <Route path="/" element={<Landing />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
