@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
 
-const URL = "http://192.168.29.107:3000";
+const URL = "https://api.vibenext.bharatsharma.co";
 
 export const Room = ({
     name,
